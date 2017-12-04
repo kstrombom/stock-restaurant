@@ -10,6 +10,11 @@ var users = require('./routes/users');
 
 var app = express();
 
+
+var io = require('socket.io')(server);
+var server = require('http').createServer(app);
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -24,6 +29,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
+//Socket.io addition
+app.use(express.static(__dirname + '/node_modules'));  
+app.get('/', function(req, res,next) {  
+    res.sendFile(__dirname + '/index.html');
+});
+server.listen(4200);
+
+io.on('connection', function(client) {  
+    console.log('Client connected...');
+
+    client.on('join', function(data) {
+        console.log(data);
+    });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
