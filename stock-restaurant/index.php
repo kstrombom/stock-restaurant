@@ -20,7 +20,12 @@ div.timerclass{
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
+
     setInterval(function () {
+      if(timer == 0)
+      {
+        window.location.reload(true);
+      }
         minutes = parseInt(timer / 60, 10)
         seconds = parseInt(timer % 60, 10);
 
@@ -29,25 +34,24 @@ function startTimer(duration, display) {
 
         display.textContent = minutes + ":" + seconds;
 
+
         if (--timer < 0) {
             timer = duration;
         }
+
     }, 1000);
 }
 
 window.onload = function () {
-    var displayMinutes = 60 * 30,
+    var displayMinutes = 60 * 1,
         display = document.querySelector('#time');
     startTimer(displayMinutes, display);
 };
-jQuery(function ($) {
-    var newMinues = 60 * 30, 
-        display = $('#time');
-    startTimer(newMinues, display);
-    setTimeout(function(){ location.reload() }, newMinues*1000);
-});
 
-</script>
+
+
+
+ </script>
 
  <h1>The Hawk</h1>
  <script>
@@ -69,6 +73,7 @@ jQuery(function ($) {
 // });
 // </script>
     <div class="content-inner">
+
 
 <?php
 
@@ -98,14 +103,29 @@ try {
          echo "<table class='data'><thead><tr><th>name</th><th>price</th><th>change</th></tr></thead><tbody>";
         foreach ($result as $row)
         {
+
+            if($row['delta'] < 0) {
+    $tdStyle='color:red;';
+} else if($row['delta'] >0){
+    $tdStyle='color:green;';
+}
+else
+{
+   $tdStyle='color:black;';
+}
+
           echo "<tr>";
           echo ("<td>".$row['name']."</td>");
-          echo  ("<td>$".$row['price']."</td>");
-          echo  ("<td>".$row['delta']."</td>");
-          echo "</tr>";
+          echo  ("<td>".$row['price']."</td>");
+          //echo  ("<td>".$row['delta']."</td>");
+          echo "</td><td style=\"".$tdStyle."\">";        
+    echo $row['delta']; 
+          echo "</td></tr>";
         }
         echo "</tbody>";
-    }
+      }
+
+      
 }
 catch(PDOException $e)
 {
