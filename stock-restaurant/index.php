@@ -43,7 +43,7 @@ function startTimer(duration, display) {
 }
 
 window.onload = function () {
-    var displayMinutes = 60 * 1,
+    var displayMinutes = 60 * 30,
         display = document.querySelector('#time');
     startTimer(displayMinutes, display);
 };
