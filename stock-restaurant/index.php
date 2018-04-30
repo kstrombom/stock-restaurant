@@ -5,6 +5,7 @@
 
  <style>
  #time {
+
   text-align: center;
   font-size: 60px;
   margin-top:0px;
@@ -12,9 +13,32 @@
 div.timerclass{
   text-align: center;
 }
+div.arrow-up{
+   content: "";
+  display: inline-block;
+  vertical-align: middle;
+   width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  
+  border-bottom: 5px solid green;
+}
+div.arrow-down{
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+   width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  
+  border-top: 5px solid #f00;
+}
 </style>
  <div class = "timerclass"><span id="time"></span></div>
-
+<!-- <div class="arrow-up"></div>
+<div class="arrow-down"></div> -->
 <script>
 
 
@@ -56,22 +80,7 @@ window.onload = function () {
  <h1>The Hawk</h1>
  <script>
 
-//     $(function() {
-
-
-//    var name = [];
-
-//    $.getJSON('name.json', function(data) {
-//        $.each(data.name, function(i, f) {
-//           var tblRow = "<tr>" + "<td>" + f.firstName + "</td>" +
-//            "<td>" + f.lastName + "</td>" + "<td>" + f.job + "</td>" + "<td>" + f.roll + "</td>" + "</tr>"
-//            $(tblRow).appendTo("#userdata tbody");
-//      });
-
-//    });
-
-// });
-// </script>
+ </script>
     <div class="content-inner">
 
 
@@ -104,21 +113,27 @@ try {
         foreach ($result as $row)
         {
 
-            if($row['delta'] < 0) {
-    $tdStyle='color:red;';
-} else if($row['delta'] >0){
-    $tdStyle='color:green;';
-}
-else
-{
-   $tdStyle='color:black;';
-}
+            if($row['delta'] < 0) 
+            {
+            $tdStyle='color:red;';
+            $arrow = "<div class=\"arrow-down\"></div>";
+            } 
+            else if($row['delta'] >0)
+            {
+                $tdStyle='color:green;';
+                $arrow = "<div class=\"arrow-up\"></div>";
+            }
+            else
+            {
+               $tdStyle='color:black;';
+               $arrow = '';
+            }
 
           echo "<tr>";
           echo ("<td>".$row['name']."</td>");
           echo  ("<td>".$row['price']."</td>");
           //echo  ("<td>".$row['delta']."</td>");
-          echo "</td><td style=\"".$tdStyle."\">";        
+          echo "</td><td style=\"".$tdStyle."\">".$arrow;        
     echo $row['delta']; 
           echo "</td></tr>";
         }
